@@ -151,10 +151,22 @@ def ray_tracing(x0, y0, angle, the_map):
 # Return:
 #   array of expected ranges
 def expected_scan(x, y, theta, min_angle, increment, n_readings, max_range, the_map):
+  readings = []
+  for i in range(0,n_readings):
+    measurement_angle = theta + msg.angle_min + i*msg.angle_increment
+    end_point = ray_tracing(x, y, measurement_angle, the_map)
+    if end_point is None:
+      readings.append(max_range)
+      continue
+    delta_x = (x-x1)
+    delta_y = (y-y1)
+    distance = (math.hypot(delta_x, delta_y))/the_map.grid.info.resolution
+    if distance > max_range:
+      readings.append(max_range)
+      continue
+    readings.append(distance)
 
-  ranges = []
-
-  return ranges
+  return readings
 
 #-------------------------------------------------------------------------------
 # Computes the similarity between two laserscan readings.
@@ -166,5 +178,11 @@ def expected_scan(x, y, theta, min_angle, increment, n_readings, max_range, the_
 #   similarity score between two scans
 def scan_similarity(ranges0, ranges1, max_range):
   score = 0
+  for i in range(0, len(ranges0)):
+    distance0 = ranges0[i]
+    distance1 = ranges1[i]
+    difference = distance0-distance1
+    if difference == 0:
+      score += 1
+  return score/len(ranges0)
 
-  return score
