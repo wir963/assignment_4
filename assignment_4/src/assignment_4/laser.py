@@ -56,7 +56,9 @@ def calc_x(x0, y0, y1, angle):
   elif angle < math.pi:
     theta = math.pi - angle
     rospy.loginfo("theta is %f" %(theta))
-    x1 = -1*math.tan(theta)*delta_y
+    tan = math.tan(theta)
+    rospy.loginfo("tan is %f" %(tan))
+    x1 = -1*tan*delta_y
     rospy.loginfo("delta y is %i" %(delta_y))
     rospy.loginfo("x is %f" %(x1))
   elif angle < 3*math.pi/2:
