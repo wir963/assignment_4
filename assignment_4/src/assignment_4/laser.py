@@ -52,21 +52,21 @@ def calc_x(x0, y0, y1, angle):
   delta_y = y1-y0
   if angle < math.pi/2:
     theta = angle
-    x1 = math.tan(theta)*delta_y
+    x1 = delta_y/math.tan(theta)
   elif angle < math.pi:
     theta = math.pi - angle
     rospy.loginfo("theta is %f" %(theta))
     tan = math.tan(theta)
     rospy.loginfo("tan is %f" %(tan))
-    x1 = -1*tan*delta_y
+    x1 = -1*delta_y/tan
     rospy.loginfo("delta y is %i" %(delta_y))
     rospy.loginfo("x is %f" %(x1))
   elif angle < 3*math.pi/2:
     theta = angle - math.pi
-    x1 = -1*math.tan(theta)*delta_y
+    x1 = -1*delta_y/math.tan(theta)
   else: # angle < 2*math.pi
     theta = 2*math.pi - angle
-    x1 = math.tan(theta)*delta_y
+    x1 = delta_y/math.tan(theta)
   rospy.loginfo("x is %f" %(x1))
   return math.floor(x1+x0)
 
@@ -74,16 +74,16 @@ def calc_y(x0, y0, x1, angle):
   delta_x = x1-x0
   if angle < math.pi/2:
     theta = angle
-    y1 = delta_x/math.tan(theta)
+    y1 = delta_x*math.tan(theta)
   elif angle < math.pi:
     theta = math.pi - angle
-    y1 = delta_x/math.tan(theta)
+    y1 = delta_x*math.tan(theta)
   elif angle < 3*math.pi/2:
     theta = angle - math.pi
-    y1 = -1*delta_x/math.tan(theta)
+    y1 = -1*delta_x*math.tan(theta)
   else: # angle < 2*math.pi
     theta = 2*math.pi - angle
-    y1 = -1*delta_x/math.tan(theta)
+    y1 = -1*delta_x*math.tan(theta)
   return math.floor(y1+y0)
 
 #-------------------------------------------------------------------------------
