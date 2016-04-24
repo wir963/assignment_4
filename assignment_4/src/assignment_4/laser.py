@@ -105,7 +105,7 @@ def get_last_point(x0, y0, angle, the_map):
   else:
     x1 = calc_x(x0, y0, min_y, angle)
     p1 = (x1, min_y)
-  if angle > math/2 and angle < 3*math.pi/2:
+  if angle > math.pi/2 and angle < 3*math.pi/2:
     y1 = calc_y(x0, y0, min_x, angle)
     p2 = (min_x, y1)
   else:
