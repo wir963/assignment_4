@@ -112,6 +112,9 @@ def get_last_point(x0, y0, angle, the_map):
   else:
     y1 = calc_y(x0, y0, min_x, angle)
     p2 = (max_x, y1)
+  (x1,y1) = p1
+  (x2,y2) = p2
+  rospy.loginfo("the two possible end points are (%i, %i) and (%i, %i)" %(x1,y1,x2,y2))
     # decide if p1 or p2 should be returned
     # only one will be a valid range
   # should add more error checking
