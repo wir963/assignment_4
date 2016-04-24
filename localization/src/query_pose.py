@@ -86,6 +86,6 @@ def pose_sub(msg):
     score = scan_similarity(scan.ranges, ex_scan, scan.range_max)
     print "Score: " + str(score)
     
-
+print "in bottom of query_pose"
 sub = rospy.Subscriber('/initialpose', PoseWithCovarianceStamped, pose_sub)
 rospy.spin()
