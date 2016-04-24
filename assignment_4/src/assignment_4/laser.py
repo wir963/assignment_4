@@ -165,7 +165,6 @@ def expected_scan(x, y, theta, min_angle, increment, n_readings, max_range, the_
       readings.append(max_range)
       continue
     readings.append(distance)
-
   return readings
 
 #-------------------------------------------------------------------------------

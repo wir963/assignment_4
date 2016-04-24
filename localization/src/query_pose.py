@@ -72,7 +72,7 @@ def pose_sub(msg):
         return
     else:
         mx, my = result
-    
+    print "About to run expected scan"
     ex_scan = expected_scan(mx, my, theta, scan.angle_min, scan.angle_increment, len(scan.ranges), scan.range_max, the_map)
     scan2.ranges = ex_scan
 
@@ -81,7 +81,7 @@ def pose_sub(msg):
 
     estimate.pose = apply(to_pose, (wx,wy,theta))
     posepub.publish(estimate)
-    
+    print "About to run scan similarity"
     score = scan_similarity(scan.ranges, ex_scan, scan.range_max)
     print "Score: " + str(score)
     
