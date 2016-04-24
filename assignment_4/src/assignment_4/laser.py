@@ -155,6 +155,7 @@ def expected_scan(x, y, theta, min_angle, increment, n_readings, max_range, the_
   readings = []
   for i in range(0,n_readings):
     measurement_angle = theta + min_angle + i*increment
+    rospy.loginfo("measurement angle is %f" %(measurement_angle))
     end_point = ray_tracing(x, y, measurement_angle, the_map)
     if end_point is None:
       readings.append(max_range)
@@ -163,6 +164,7 @@ def expected_scan(x, y, theta, min_angle, increment, n_readings, max_range, the_
     delta_x = (x-x1)
     delta_y = (y-y1)
     distance = (math.hypot(delta_x, delta_y))/the_map.info.resolution
+    rospy.loginfo("distance is %f" %(distance))
     if distance > max_range:
       readings.append(max_range)
       continue
