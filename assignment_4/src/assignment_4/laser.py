@@ -94,19 +94,9 @@ def calc_y(x0, y0, x1, angle):
 #   the_map   map
 # Return:
 #    the last point in the map (in map coordinates)
-def get_last_point(x0, y0, angle, the_map):
-  # if angle < math.pi/2:
-  #   # max_x or max_y
-  # elif angle < math.pi:
-  #   # min_x or  max_y
-  # elif angle < 3*math.pi/2:
-  #   # min_x or min_y
-  # else: # angle < 2*math.pi
-  #   # max_x or min_y
-  max_x = the_map.info.width
-  #rospy.loginfo("width of the map is %i" %(max_x))
-  max_y = the_map.info.height
-  #rospy.loginfo("height of the map is %i" %(max_y))
+def get_last_point(x0, y0, angle, width, height):
+  max_x = width
+  max_y = height
   min_x = 0
   min_y = 0
   angle = update_angle(angle, 0)
@@ -120,13 +110,10 @@ def get_last_point(x0, y0, angle, the_map):
     y1 = calc_y(x0, y0, min_x, angle)
     p2 = (min_x, y1)
   else:
-    y1 = calc_y(x0, y0, min_x, angle)
+    y1 = calc_y(x0, y0, max_x, angle)
     p2 = (max_x, y1)
   (x1,y1) = p1
   (x2,y2) = p2
-    # decide if p1 or p2 should be returned
-    # only one will be a valid range
-  # should add more error checking
   if x1 > max_x or x1 < min_x:
     return p2
   return p1
@@ -143,7 +130,7 @@ def ray_tracing(x0, y0, angle, the_map):
   # find the integer coordinates of the last point in the map that this ray will trace
   # grid coordinates means they are indexes into the map
   # Given x0, y0, angle and map, return the last point
-  (x1, y1) = get_last_point(x0, y0, angle, the_map)
+  (x1, y1) = get_last_point(x0, y0, angle, the_map.info.width, the_map.info.height)
   # rospy.loginfo("starting point is (%i, %i), angle is %f and end point is (%i, %i)" %(x0,y0,angle,x1,y1))
   points = line_seg(x0, y0, x1, y1)
   for point in points:
