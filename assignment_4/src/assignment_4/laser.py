@@ -164,7 +164,7 @@ def expected_scan(x, y, theta, min_angle, increment, n_readings, max_range, the_
     (x1, y1) = end_point
     delta_x = (x-x1)
     delta_y = (y-y1)
-    distance = (math.hypot(delta_x, delta_y))/the_map.info.resolution
+    distance = math.hypot(delta_x, delta_y)*the_map.info.resolution
     rospy.loginfo("distance is %f" %(distance))
     if distance > max_range:
       readings.append(max_range)
