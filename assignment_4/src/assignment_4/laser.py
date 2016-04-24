@@ -36,6 +36,87 @@ def line_seg(x0, y0, x1, y1):
   # Return
   return points
 
+
+def update_angle(old_angle, update_amt):
+  new_angle = old_angle + update_amt
+  while new_angle < 0:
+    new_angle = 2*math.pi+new_angle
+  while new_angle > 2*math.pi:
+    new_angle = new_angle-2*math.pi
+  return new_angle
+
+
+def calc_x(x0, y0, y1, angle):
+  if angle < math.pi/2:
+    theta = angle
+    x1 = math.tan(theta)*y1
+  elif angle < math.pi:
+    theta = math.pi - angle
+    x1 = -1*math.tan(theta)*y1
+  elif angle < 3*math.pi/2:
+    theta = angle - math.pi
+    x1 = -1*math.tan(theta)*y1
+  else: # angle < 2*math.pi
+    theta = 2*math.pi - angle
+    x1 = math.tan(theta)*y1
+  return math.floor(x1+x0)
+
+def calc_y(x0, y0, x1, angle):
+  if angle < math.pi/2:
+    theta = angle
+    y1 = x1/math.tan(theta)
+  elif angle < math.pi:
+    theta = math.pi - angle
+    y1 = x1/math.tan(theta)
+  elif angle < 3*math.pi/2:
+    theta = angle - math.pi
+    y1 = -1*x1/math.tan(theta)
+  else: # angle < 2*math.pi
+    theta = 2*math.pi - angle
+    y1 = -1*x1/math.tan(theta)
+  return math.floor(y1+y0)
+
+#-------------------------------------------------------------------------------
+# Given a ray find the coordinates of the first occupied cell in a ray
+# Parameters:
+#   x0, y0    map coordinates of a cell containing ray origin
+#   angle     angle of a ray
+#   the_map   map
+# Return:
+#    the last point in the map (in map coordinates)
+def get_last_point(x0, y0, angle, the_map):
+  # if angle < math.pi/2:
+  #   # max_x or max_y
+  # elif angle < math.pi:
+  #   # min_x or  max_y
+  # elif angle < 3*math.pi/2:
+  #   # min_x or min_y
+  # else: # angle < 2*math.pi
+  #   # max_x or min_y
+  max_x = the_map.size_x
+  max_y = the_map.size_y
+  min_x = 0
+  min_y = 0
+  angle = update_angle(angle)
+  if angle < math.pi:
+    x1 = calc_x(x0, y0, max_y, angle)
+    p1 = (x1, max_y)
+  else:
+    x1 = calc_x(x0, y0, min_y, angle)
+    p1 = (x1, min_y)
+  if angle > math/2 and angle < 3*math.pi/2:
+    y1 = calc_y(x0, y0, min_x, angle)
+    p2 = (min_x, y1)
+  else:
+    y1 = calc_y(x0, y0, min_x, angle)
+    p2 = (max_x, y1)
+    # decide if p1 or p2 should be returned
+    # only one will be a valid range
+  # should add more error checking
+  if x1 > max_x or x1 < min_x:
+    return p2
+  return p1
+
 #-------------------------------------------------------------------------------
 # Given a ray find the coordinates of the first occupied cell in a ray
 # Parameters:
@@ -45,7 +126,16 @@ def line_seg(x0, y0, x1, y1):
 # Return:
 #    first occupied cell
 def ray_tracing(x0, y0, angle, the_map):
-
+  # find the integer coordinates of the last point in the map that this ray will trace
+  # grid coordinates means they are indexes into the map
+  # Given x0, y0, angle and map, return the last point
+  (x1, y1) = get_last_point(x0, y0, angle, the_map)
+  points = line_seg(x0, y0, x1, y1)
+  for point in points:
+    (x,y) = point
+    index = to_index(x, y, self.grid.info.width)
+    if self.grid.data[index] == 100:
+      return (x,y)
   return None
 
 #-------------------------------------------------------------------------------
