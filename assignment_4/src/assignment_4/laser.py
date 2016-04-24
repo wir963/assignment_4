@@ -134,8 +134,8 @@ def ray_tracing(x0, y0, angle, the_map):
   points = line_seg(x0, y0, x1, y1)
   for point in points:
     (x,y) = point
-    index = to_index(x, y, self.grid.info.width)
-    if self.grid.data[index] == 100:
+    index = to_index(x, y, the_map.grid.info.width)
+    if the_map.grid.data[index] == 100:
       return (x,y)
   return None
 
