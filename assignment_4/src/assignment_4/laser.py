@@ -96,7 +96,9 @@ def get_last_point(x0, y0, angle, the_map):
   # else: # angle < 2*math.pi
   #   # max_x or min_y
   max_x = the_map.info.width
+  rospy.loginfo("width of the map is %i" %(max_x))
   max_y = the_map.info.height
+  rospy.loginfo("height of the map is %i" %(max_y))
   min_x = 0
   min_y = 0
   angle = update_angle(angle, 0)
