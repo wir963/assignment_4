@@ -1,5 +1,6 @@
 from math import sin, cos, atan2, hypot, exp, floor
 from assignment_3.geometry import to_index, to_world, to_grid
+import math
 
 # ------------------------------------------------------------------------------
 # Given two integer coordinates of two cells return a list of coordinates of
