@@ -132,6 +132,7 @@ def ray_tracing(x0, y0, angle, the_map):
   # grid coordinates means they are indexes into the map
   # Given x0, y0, angle and map, return the last point
   (x1, y1) = get_last_point(x0, y0, angle, the_map)
+  rospy.loginfo("starting point is (%i, %i), angle is %f and end point is (%i, %i)" %(x0,y0,angle,x1,y1))
   points = line_seg(x0, y0, x1, y1)
   for point in points:
     (x,y) = point
