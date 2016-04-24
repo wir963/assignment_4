@@ -2,6 +2,7 @@ from math import sin, cos, atan2, hypot, exp, floor
 from assignment_3.geometry import to_index, to_world, to_grid
 import math
 import rospy
+import sys
 
 # ------------------------------------------------------------------------------
 # Given two integer coordinates of two cells return a list of coordinates of
@@ -55,19 +56,16 @@ def calc_x(x0, y0, y1, angle):
     x1 = delta_y/math.tan(theta)
   elif angle < math.pi:
     theta = math.pi - angle
-    rospy.loginfo("theta is %f" %(theta))
     tan = math.tan(theta)
-    rospy.loginfo("tan is %f" %(tan))
-    x1 = -1*delta_y/tan
-    rospy.loginfo("delta y is %i" %(delta_y))
-    rospy.loginfo("x is %f" %(x1))
+    x1 = -1*delta_y/math.tan(theta)
   elif angle < 3*math.pi/2:
     theta = angle - math.pi
     x1 = -1*delta_y/math.tan(theta)
-  else: # angle < 2*math.pi
+  elif angle < 2*math.pi:
     theta = 2*math.pi - angle
     x1 = delta_y/math.tan(theta)
-  rospy.loginfo("x is %f" %(x1))
+  else:
+    sys.exit(1)
   return math.floor(x1+x0)
 
 def calc_y(x0, y0, x1, angle):
@@ -81,9 +79,11 @@ def calc_y(x0, y0, x1, angle):
   elif angle < 3*math.pi/2:
     theta = angle - math.pi
     y1 = -1*delta_x*math.tan(theta)
-  else: # angle < 2*math.pi
+  elif angle < 2*math.pi:
     theta = 2*math.pi - angle
     y1 = -1*delta_x*math.tan(theta)
+  else:
+    sys.exit(1)
   return math.floor(y1+y0)
 
 #-------------------------------------------------------------------------------
