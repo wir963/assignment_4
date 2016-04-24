@@ -159,6 +159,7 @@ def expected_scan(x, y, theta, min_angle, increment, n_readings, max_range, the_
     if end_point is None:
       readings.append(max_range)
       continue
+    (x1, y1) = end_point
     delta_x = (x-x1)
     delta_y = (y-y1)
     distance = (math.hypot(delta_x, delta_y))/the_map.grid.info.resolution
