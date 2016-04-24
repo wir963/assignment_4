@@ -62,6 +62,7 @@ br = tf.TransformBroadcaster()
 publish_update(pub_true, scan, br, true_pos)
 
 def pose_sub(msg):
+    print "Running pose_sub"
     x = msg.pose.pose.position.x
     y = msg.pose.pose.position.y
     q = msg.pose.pose.orientation
