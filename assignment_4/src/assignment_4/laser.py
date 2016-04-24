@@ -153,7 +153,7 @@ def ray_tracing(x0, y0, angle, the_map):
 def expected_scan(x, y, theta, min_angle, increment, n_readings, max_range, the_map):
   readings = []
   for i in range(0,n_readings):
-    measurement_angle = theta + msg.angle_min + i*msg.angle_increment
+    measurement_angle = theta + min_angle + i*increment
     end_point = ray_tracing(x, y, measurement_angle, the_map)
     if end_point is None:
       readings.append(max_range)
