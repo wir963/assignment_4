@@ -51,7 +51,7 @@ def update_angle(old_angle, update_amt):
 
 def calc_x(x0, y0, y1, angle):
   delta_y = y1-y0
-  if angle < math.pi/2:
+  if angle >=0 and angle < math.pi/2:
     theta = angle
     x1 = delta_y/math.tan(theta)
   elif angle < math.pi:
@@ -70,7 +70,7 @@ def calc_x(x0, y0, y1, angle):
 
 def calc_y(x0, y0, x1, angle):
   delta_x = x1-x0
-  if angle < math.pi/2:
+  if angle >= 0 and angle < math.pi/2:
     theta = angle
     y1 = delta_x*math.tan(theta)
   elif angle < math.pi:
