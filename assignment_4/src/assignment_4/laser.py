@@ -93,8 +93,8 @@ def get_last_point(x0, y0, angle, the_map):
   #   # min_x or min_y
   # else: # angle < 2*math.pi
   #   # max_x or min_y
-  max_x = the_map.size_x
-  max_y = the_map.size_y
+  max_x = the_map.width
+  max_y = the_map.height
   min_x = 0
   min_y = 0
   angle = update_angle(angle)
