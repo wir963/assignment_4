@@ -60,10 +60,10 @@ def calc_x(x0, y0, y1, angle):
     x1 = -1*delta_y/math.tan(theta)
   elif angle < 3*math.pi/2:
     theta = angle - math.pi
-    x1 = -1*delta_y/math.tan(theta)
+    x1 = delta_y/math.tan(theta)
   elif angle < 2*math.pi:
     theta = 2*math.pi - angle
-    x1 = delta_y/math.tan(theta)
+    x1 = -1*delta_y/math.tan(theta)
   else:
     sys.exit(1)
   return math.floor(x1+x0)
