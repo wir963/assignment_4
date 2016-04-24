@@ -124,7 +124,6 @@ def get_last_point(x0, y0, angle, the_map):
     p2 = (max_x, y1)
   (x1,y1) = p1
   (x2,y2) = p2
-  rospy.loginfo("the two possible end points are (%i, %i) and (%i, %i)" %(x1,y1,x2,y2))
     # decide if p1 or p2 should be returned
     # only one will be a valid range
   # should add more error checking
@@ -145,7 +144,7 @@ def ray_tracing(x0, y0, angle, the_map):
   # grid coordinates means they are indexes into the map
   # Given x0, y0, angle and map, return the last point
   (x1, y1) = get_last_point(x0, y0, angle, the_map)
-  rospy.loginfo("starting point is (%i, %i), angle is %f and end point is (%i, %i)" %(x0,y0,angle,x1,y1))
+  # rospy.loginfo("starting point is (%i, %i), angle is %f and end point is (%i, %i)" %(x0,y0,angle,x1,y1))
   points = line_seg(x0, y0, x1, y1)
   for point in points:
     (x,y) = point
@@ -170,17 +169,17 @@ def expected_scan(x, y, theta, min_angle, increment, n_readings, max_range, the_
   readings = []
   for i in range(0,n_readings):
     measurement_angle = theta + min_angle + i*increment
-    rospy.loginfo("measurement angle is %f" %(measurement_angle))
+    # rospy.loginfo("measurement angle is %f" %(measurement_angle))
     end_point = ray_tracing(x, y, measurement_angle, the_map)
     if end_point is None:
       readings.append(max_range)
       continue
     (x1, y1) = end_point
-    rospy.loginfo("end point is (%i, %i)" %(x1, y1))
+    # rospy.loginfo("end point is (%i, %i)" %(x1, y1))
     delta_x = (x-x1)
     delta_y = (y-y1)
     distance = math.hypot(delta_x, delta_y)*the_map.info.resolution
-    rospy.loginfo("distance is %f" %(distance))
+    # rospy.loginfo("distance is %f" %(distance))
     if distance > max_range:
       readings.append(max_range)
       continue
@@ -200,8 +199,11 @@ def scan_similarity(ranges0, ranges1, max_range):
   for i in range(0, len(ranges0)):
     distance0 = ranges0[i]
     distance1 = ranges1[i]
-    difference = distance0-distance1
-    if difference == 0:
+    if distance1 >= max_range and distance0 >= max_range:
       score += 1
+    else:
+      difference = math.fabs(distance0-distance1)
+      relative_diff = 1 - difference/max(distance0, distance1)
+      score += relative_diff
   return score/len(ranges0)
 
