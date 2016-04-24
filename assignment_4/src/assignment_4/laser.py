@@ -75,10 +75,10 @@ def calc_y(x0, y0, x1, angle):
     y1 = delta_x*math.tan(theta)
   elif angle < math.pi:
     theta = math.pi - angle
-    y1 = delta_x*math.tan(theta)
+    y1 = -1*delta_x*math.tan(theta)
   elif angle < 3*math.pi/2:
     theta = angle - math.pi
-    y1 = -1*delta_x*math.tan(theta)
+    y1 = delta_x*math.tan(theta)
   elif angle < 2*math.pi:
     theta = 2*math.pi - angle
     y1 = -1*delta_x*math.tan(theta)
