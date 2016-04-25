@@ -9,18 +9,22 @@ import matplotlib.patches as patches
 # Generates a random pose in the map (in real world coordinates)
 def random_particle(the_map):
 
-  x = 0
-  y = 0
-  theta = 0
+  max_x = the_map.info.width
+  max_y = the_map.info.height
+  max_theta = 2*pi
 
+  x = random.randint(0,max_x-1)
+  y = random.randint(0,max_y-1)
+  theta = random.uniform(0, max_theta)
+  index = to_index(x, y, the_map.info.width)
+  if the_map.data[index] == 100:
+    return random_particle(the_map)
   return (x, y, theta)
 
 #-------------------------------------------------------------------------------
 # Generates a new particle from an old one by adding noise to it
 def new_particle(particle, spatial_var, angle_var):
-  x     = 0
-  y     = 0
-  theta = 0
+  (x,y,theta) = particle
 
   return (x,y,theta)
     
@@ -32,7 +36,7 @@ def resample(particles_weighted, n_particles):
 
   particles = []
   
-  return particles      
+  return n_particles      
 
 # ----------------------------------------------------------------------------
 # Draw an occupancy grid
