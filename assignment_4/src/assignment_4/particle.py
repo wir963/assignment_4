@@ -9,14 +9,20 @@ import matplotlib.patches as patches
 # Generates a random pose in the map (in real world coordinates)
 def random_particle(the_map):
 
-  max_x = the_map.info.width
-  max_y = the_map.info.height
+
+  min_x = the_map.info.origin.position.x
+  min_y = the_map.info.origin.position.y
+  max_x = min_x + (the_map.info.width*the_map.info.resolution)
+  max_y = min_y + (the_map.info.height*the_map.info.resolution)
   max_theta = 2*pi
 
-  x = random.randint(0,max_x-1)
-  y = random.randint(0,max_y-1)
+  x = random.uniform(min_x, max_x)
+  y = random.uniform(min_y, max_y)
   theta = random.uniform(0, max_theta)
-  index = to_index(x, y, the_map.info.width)
+
+  (x_grid, y_grid) = to_grid(x,y,min_x,min_y,the_map.info.width, the_map.info.height, the_map.info.resolution)
+  index = to_index(x_grid, y_grid, the_map.info.width)
+  
   if the_map.data[index] == 100:
     return random_particle(the_map)
   return (x, y, theta)
