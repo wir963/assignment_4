@@ -182,16 +182,19 @@ def expected_scan(x, y, theta, min_angle, increment, n_readings, max_range, the_
 # Return:
 #   similarity score between two scans
 def scan_similarity(ranges0, ranges1, max_range):
-  score = 0
+  total_score = 0
   for i in range(0, len(ranges0)):
     distance0 = ranges0[i]
     distance1 = ranges1[i]
     #print "distance0 is %f, distance1 is %f and max_range is %f" %(distance0, distance1, max_range)
-    difference = math.fabs(distance0-distance1)
-    relative_diff = 1 - difference/max_range #max(distance0, distance1)
-    if relative_diff > 1:
+    difference = math.fabs(distance0-distance1)/max_range
+    score = 1 - difference #max(distance0, distance1)
+    score = math.pow(score, 2)
+    # if score < .8:
+    #   score = score/2
+    if score > 1:
       sys.exit()
     #print "score is %f" %(relative_diff)
-    score += relative_diff
-  return score/len(ranges0)
+    total_score += score
+  return total_score/len(ranges0)
 
