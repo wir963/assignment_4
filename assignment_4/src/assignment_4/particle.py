@@ -63,6 +63,7 @@ def resample(particles_weighted, n_particles, the_map):
   total_score = 0
   particles = []
   for (score, particle) in particles_weighted:
+    print "particle score is %f" %(score)
     total_score += score
   print "total score is %f" %(total_score)
   # want n_particles total

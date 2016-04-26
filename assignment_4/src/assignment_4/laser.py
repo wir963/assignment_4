@@ -186,12 +186,12 @@ def scan_similarity(ranges0, ranges1, max_range):
   for i in range(0, len(ranges0)):
     distance0 = ranges0[i]
     distance1 = ranges1[i]
-    print "distance0 is %f, distance1 is %f and max_range is %f" %(distance0, distance1, max_range)
+    #print "distance0 is %f, distance1 is %f and max_range is %f" %(distance0, distance1, max_range)
     difference = math.fabs(distance0-distance1)
     relative_diff = 1 - difference/max_range #max(distance0, distance1)
     if relative_diff > 1:
       sys.exit()
-    print "score is %f" %(relative_diff)
+    #print "score is %f" %(relative_diff)
     score += relative_diff
   return score/len(ranges0)
 
