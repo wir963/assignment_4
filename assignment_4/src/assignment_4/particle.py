@@ -35,19 +35,19 @@ def random_particle(the_map):
 # Generates a new particle from an old one by adding noise to it
 def new_particle(particle, spatial_var, angle_var, the_map):
   (x,y,theta) = particle
-  min_x = x*(1-spatial_var)
-  max_x = x*(1+spatial_var)
+  min_x = x-spatial_var
+  max_x = x+spatial_var
   new_x = random.uniform(min_x,max_x)
 
-  min_y = y*(1-spatial_var)
-  max_y = y*(1+spatial_var)
+  min_y = y-spatial_var
+  max_y = y+spatial_var
   new_y = random.uniform(min_y, max_y)
 
   if to_grid_helper(new_x, new_y, the_map) is None:
     return new_particle(particle, spatial_var, angle_var, the_map)
 
-  min_angle = theta*(1-angle_var)
-  max_angle = theta*(1+angle_var)
+  min_angle = theta-angle_var
+  max_angle = theta+angle_var
   new_angle = random.uniform(min_angle, max_angle)
   return (new_x, new_y, new_angle)
     
@@ -74,7 +74,7 @@ def resample(particles_weighted, n_particles, the_map):
       current_particle += 1
       (score, particle) = particles_weighted[current_particle]
       cumulative_score += score
-    particle = new_particle(particle, 0.01, 0.01, the_map)
+    particle = new_particle(particle, 1, 1, the_map)
     particles.append(particle)
     current_score += gap
   assert len(particles) == n_particles
