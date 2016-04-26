@@ -9,7 +9,6 @@ import matplotlib.patches as patches
 # Generates a random pose in the map (in real world coordinates)
 def random_particle(the_map):
 
-
   min_x = the_map.info.origin.position.x
   min_y = the_map.info.origin.position.y
   max_x = min_x + (the_map.info.width*the_map.info.resolution)
@@ -22,7 +21,7 @@ def random_particle(the_map):
 
   (x_grid, y_grid) = to_grid(x,y,min_x,min_y,the_map.info.width, the_map.info.height, the_map.info.resolution)
   index = to_index(x_grid, y_grid, the_map.info.width)
-  
+
   # if the_map.data[index] == 100:
   #   return random_particle(the_map)
   return (x, y, theta)
@@ -38,9 +37,13 @@ def new_particle(particle, spatial_var, angle_var):
 # Resamples the particles.
 # NOTE: particle weights are not normalized i.e. it is not guaranteed that the 
 # sum of all particle weights is 1.
+# n_particles in the number of particles
+# scores is a list of tuples of the form (score, (x,y,theta) )
 def resample(particles_weighted, n_particles):
 
   particles = []
+  for (score, particle) in particles_weighted:
+    particles.append(particle)
   
   return n_particles      
 

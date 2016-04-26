@@ -81,9 +81,7 @@ for iteration in range(args.iterations):
     
     scores = []
     scans = [] 
-    print particles
     for x,y,theta in particles:
-        print "is this loop being run at all?"
         result = to_grid(x,y, the_map.info.origin.position.x, the_map.info.origin.position.y, the_map.info.width, the_map.info.height, the_map.info.resolution)
         if not result:
             continue
