@@ -48,7 +48,7 @@ def new_particle(particle, spatial_var, angle_var, the_map):
   if grid_coordinates is None:
     return new_particle(particle, spatial_var, angle_var, the_map)
   # check to see if new_particle would return an occupied grid
-  (grid_x, grid_y) = grid_coordinates
+  (x_grid, y_grid) = grid_coordinates
   index = to_index(x_grid, y_grid, the_map.info.width)
   if the_map.data[index] == 100:
     return new_particle(particle, spatial_var, angle_var, the_map)
