@@ -45,7 +45,7 @@ def resample(particles_weighted, n_particles):
   for (score, particle) in particles_weighted:
     particles.append(particle)
   
-  return n_particles      
+  return particles      
 
 # ----------------------------------------------------------------------------
 # Draw an occupancy grid
