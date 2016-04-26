@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 
-def to_grid(x,y,the_map):
+def to_grid_helper(x,y,the_map):
   return to_grid(x, y, the_map.info.origin.position.x, the_map.info.origin.position.y, the_map.info.width,
                  the_map.info.height, the_map.info.resolution)
 
@@ -24,7 +24,7 @@ def random_particle(the_map):
   y = random.uniform(min_y, max_y)
   theta = random.uniform(0, max_theta)
 
-  (x_grid, y_grid) = to_grid(x,y,the_map)
+  (x_grid, y_grid) = to_grid_helper(x,y,the_map)
   index = to_index(x_grid, y_grid, the_map.info.width)
 
   if the_map.data[index] == 100:
@@ -43,7 +43,7 @@ def new_particle(particle, spatial_var, angle_var, the_map):
   max_y = y*(1+spatial_var)
   new_y = random.uniform(min_y, max_y)
 
-  if to_grid(new_x, new_y, the_map) is None:
+  if to_grid_helper(new_x, new_y, the_map) is None:
     return new_particle(particle, spatial_var, angle_var, the_map)
 
   min_angle = theta*(1-angle_var)
