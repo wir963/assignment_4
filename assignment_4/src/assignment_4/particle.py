@@ -43,7 +43,14 @@ def new_particle(particle, spatial_var, angle_var, the_map):
   max_y = y+spatial_var
   new_y = random.uniform(min_y, max_y)
 
-  if to_grid_helper(new_x, new_y, the_map) is None:
+  # check to see if new_particle is still on the map
+  grid_coordinates = to_grid_helper(new_x, new_y, the_map)
+  if grid_coordinates is None:
+    return new_particle(particle, spatial_var, angle_var, the_map)
+  # check to see if new_particle would return an occupied grid
+  (grid_x, grid_y) = grid_coordinates
+  index = to_index(x_grid, y_grid, the_map.info.width)
+  if the_map.data[index] == 100:
     return new_particle(particle, spatial_var, angle_var, the_map)
 
   min_angle = theta-angle_var
