@@ -56,7 +56,7 @@ def resample(particles_weighted, n_particles):
       current_particle += 1
       (score, particle) = particles_weighted[current_particle]
       cumulative_score += score
-    particle = new_particle(particle)
+    particle = new_particle(particle, 0, 0)
     particles.append(particle)
     current_score += gap
   assert len(particles) == n_particles
