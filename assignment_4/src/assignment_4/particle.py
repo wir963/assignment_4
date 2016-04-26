@@ -23,8 +23,8 @@ def random_particle(the_map):
   (x_grid, y_grid) = to_grid(x,y,min_x,min_y,the_map.info.width, the_map.info.height, the_map.info.resolution)
   index = to_index(x_grid, y_grid, the_map.info.width)
   
-  if the_map.data[index] == 100:
-    return random_particle(the_map)
+  # if the_map.data[index] == 100:
+  #   return random_particle(the_map)
   return (x, y, theta)
 
 #-------------------------------------------------------------------------------

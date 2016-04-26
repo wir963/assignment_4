@@ -69,6 +69,8 @@ particles = []
 for i in range(args.particles):
     particles.append( random_particle(the_map) )
 
+print particles
+
 for iteration in range(args.iterations):
     if args.ros:
         pa.poses = []
