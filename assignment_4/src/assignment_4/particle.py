@@ -5,6 +5,11 @@ import random
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
+
+def to_grid(x,y,the_map):
+  return to_grid(x, y, the_map.info.origin.position.x, the_map.info.origin.position.y, the_map.info.width,
+                 the_map.info.height, the_map.info.resolution)
+
 #-------------------------------------------------------------------------------
 # Generates a random pose in the map (in real world coordinates)
 def random_particle(the_map):
@@ -19,19 +24,32 @@ def random_particle(the_map):
   y = random.uniform(min_y, max_y)
   theta = random.uniform(0, max_theta)
 
-  (x_grid, y_grid) = to_grid(x,y,min_x,min_y,the_map.info.width, the_map.info.height, the_map.info.resolution)
+  (x_grid, y_grid) = to_grid(x,y,the_map)
   index = to_index(x_grid, y_grid, the_map.info.width)
 
-  # if the_map.data[index] == 100:
-  #   return random_particle(the_map)
+  if the_map.data[index] == 100:
+    return random_particle(the_map)
   return (x, y, theta)
 
 #-------------------------------------------------------------------------------
 # Generates a new particle from an old one by adding noise to it
-def new_particle(particle, spatial_var, angle_var):
+def new_particle(particle, spatial_var, angle_var, the_map):
   (x,y,theta) = particle
+  min_x = x*(1-spatial_var)
+  max_x = x*(1+spatial_var)
+  new_x = random.uniform(min_x,max_x)
 
-  return (x,y,theta)
+  min_y = y*(1-spatial_var)
+  max_y = y*(1+spatial_var)
+  new_y = random.uniform(min_y, max_y)
+
+  if to_grid(new_x, new_y, the_map) is None:
+    return new_particle(particle, spatial_var, angle_var, the_map)
+
+  min_angle = theta*(1-angle_var)
+  max_angle = theta*(1+angle_var)
+  new_angle = random.uniform(min_angle, max_angle)
+  return (new_x, new_y, new_angle)
     
 #-------------------------------------------------------------------------------
 # Resamples the particles.
@@ -39,7 +57,7 @@ def new_particle(particle, spatial_var, angle_var):
 # sum of all particle weights is 1.
 # n_particles in the number of particles
 # scores is a list of tuples of the form (score, (x,y,theta) )
-def resample(particles_weighted, n_particles):
+def resample(particles_weighted, n_particles, the_map):
   total_score = 0
   particles = []
   for (score, particle) in particles_weighted:
@@ -56,7 +74,7 @@ def resample(particles_weighted, n_particles):
       current_particle += 1
       (score, particle) = particles_weighted[current_particle]
       cumulative_score += score
-    particle = new_particle(particle, 0, 0)
+    particle = new_particle(particle, 0.2, 0.2, the_map)
     particles.append(particle)
     current_score += gap
   assert len(particles) == n_particles

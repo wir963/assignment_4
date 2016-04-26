@@ -110,7 +110,7 @@ for iteration in range(args.iterations):
     # Run debug function
     debug_call(scores, the_map)
 
-    particles = resample( scores, args.particles )
+    particles = resample( scores, args.particles, the_map)
 
     if rospy.is_shutdown():
         break
