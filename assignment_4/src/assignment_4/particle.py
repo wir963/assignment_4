@@ -62,11 +62,20 @@ def new_particle(particle, spatial_var, angle_var, the_map):
 def resample(particles_weighted, n_particles, the_map):
   total_score = 0
   particles = []
+  # lets normalize data from (0,1)
+  min_score = 1
+  max_score = 0
   for (score, particle) in particles_weighted:
-    #print "particle score is %f" %(score)
-    total_score += score
-  #print "total score is %f" %(total_score)
-  # want n_particles total
+    max_score = max(max_score, score)
+    min_score = min(min_score, score)
+  # normalize scores
+  print "min_score is %f and max_score is %f" %(min_score, max_score)
+  particles_normalized = []
+  for (score, particle) in particles_weighted:
+    norm_score = (score-min_score)/(max_score-min_score)
+    total_score += norm_score
+    particles_normalized.append((norm_score, particle))
+    print "norm score is %f" %(norm_score)
   gap = total_score/(n_particles+1)
   print "gap is %f" %(gap)
   start = random.uniform(0,gap)
@@ -76,7 +85,7 @@ def resample(particles_weighted, n_particles, the_map):
   for i in range(0,n_particles):
     while cumulative_score < current_score:
       current_particle += 1
-      (score, particle) = particles_weighted[current_particle]
+      (score, particle) = particles_normalized[current_particle]
       cumulative_score += score
     particle = new_particle(particle, 1, 1, the_map)
     particles.append(particle)
