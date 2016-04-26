@@ -40,11 +40,26 @@ def new_particle(particle, spatial_var, angle_var):
 # n_particles in the number of particles
 # scores is a list of tuples of the form (score, (x,y,theta) )
 def resample(particles_weighted, n_particles):
-
+  total_score = 0
   particles = []
   for (score, particle) in particles_weighted:
+    total_score += score
+  print "total score is %f" %(total_score)
+  # want n_particles total
+  gap = total_score/(n_particles+1)
+  start = random.uniform(0,gap)
+  current_score = start
+  cumulative_score = 0
+  current_particle = -1
+  for i in range(0,n_particles):
+    while cumulative_score < current_score:
+      current_particle += 1
+      (score, particle) = particles_weighted[current_particle]
+      cumulative_score += score
+    particle = new_particle(particle)
     particles.append(particle)
-  
+    current_score += gap
+  assert len(particles) == n_particles
   return particles      
 
 # ----------------------------------------------------------------------------
