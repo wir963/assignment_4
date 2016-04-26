@@ -35,13 +35,8 @@ def random_particle(the_map):
 # Generates a new particle from an old one by adding noise to it
 def new_particle(particle, spatial_var, angle_var, the_map):
   (x,y,theta) = particle
-  min_x = x-spatial_var
-  max_x = x+spatial_var
-  new_x = random.uniform(min_x,max_x)
-
-  min_y = y-spatial_var
-  max_y = y+spatial_var
-  new_y = random.uniform(min_y, max_y)
+  new_x = random.gauss(x, spatial_var)
+  new_y = random.gauss(y, spatial_var)
 
   # check to see if new_particle is still on the map
   grid_coordinates = to_grid_helper(new_x, new_y, the_map)
