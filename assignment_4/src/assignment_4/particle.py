@@ -90,7 +90,7 @@ def resample(particles_weighted, n_particles, the_map):
       current_particle += 1
       (score, particle) = particles_normalized[current_particle]
       cumulative_score += score
-    particle = new_particle(particle, 1-score, 1-score, the_map)
+    particle = new_particle(particle, math.sqrt(1-score), math.sqrt(1-score), the_map)
     particles.append(particle)
     current_score += gap
   assert len(particles) == n_particles
