@@ -75,6 +75,7 @@ def resample(particles_weighted, n_particles, the_map):
     # if score < max_score-.1:
     #   score = score/2
     norm_score = (score-min_score)/(max_score-min_score)
+    norm_score = math.pow(norm_score,2)
     total_score += norm_score
     particles_normalized.append((norm_score, particle))
     #print "norm score is %f" %(norm_score)
@@ -89,7 +90,7 @@ def resample(particles_weighted, n_particles, the_map):
       current_particle += 1
       (score, particle) = particles_normalized[current_particle]
       cumulative_score += score
-    particle = new_particle(particle, 1-math.sqrt(score), 1-math.sqrt(score), the_map)
+    particle = new_particle(particle, 1-score, 1-score, the_map)
     particles.append(particle)
     current_score += gap
   assert len(particles) == n_particles
