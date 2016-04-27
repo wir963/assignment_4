@@ -72,8 +72,8 @@ def resample(particles_weighted, n_particles, the_map):
   #print "min_score is %f and max_score is %f" %(min_score, max_score)
   particles_normalized = []
   for (score, particle) in particles_weighted:
-    if score < max_score-.1:
-      score = score/2
+    # if score < max_score-.1:
+    #   score = score/2
     norm_score = (score-min_score)/(max_score-min_score)
     total_score += norm_score
     particles_normalized.append((norm_score, particle))
