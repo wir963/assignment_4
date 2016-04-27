@@ -196,5 +196,5 @@ def scan_similarity(ranges0, ranges1, max_range):
       sys.exit()
     #print "score is %f" %(relative_diff)
     total_score += score
-  return total_score/len(ranges0)
+  return math.pow(total_score/len(ranges0))
 
