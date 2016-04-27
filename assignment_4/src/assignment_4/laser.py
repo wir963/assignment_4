@@ -189,9 +189,9 @@ def scan_similarity(ranges0, ranges1, max_range):
     #print "distance0 is %f, distance1 is %f and max_range is %f" %(distance0, distance1, max_range)
     difference = math.fabs(distance0-distance1)/max_range
     score = 1 - difference #max(distance0, distance1)
+    if distance0 == max_range and distance1 != max_range or distance0 != max_range and distance1 == max_range:
+      score = 0
     score = math.pow(score, 2)
-    # if score < .8:
-    #   score = score/2
     if score > 1:
       sys.exit()
     #print "score is %f" %(relative_diff)
